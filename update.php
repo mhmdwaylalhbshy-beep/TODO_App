@@ -6,39 +6,39 @@ $conn = mysqli_connect("localhost", "root", "", "todoapp");
 
 if (!$conn) {
     $_SESSION['error'] = "Connection failed: " . mysqli_connect_error();
-    header("Location: index.php");
-    exit;
+        header("Location: index.php");
+          exit;
 }
 
 if (!isset($_GET['id'])) {
-    mysqli_close($conn);
-    header("Location: index.php");
-    exit;
+      mysqli_close($conn);
+          header("Location: index.php");
+             exit;
 }
 
 $id = (int) $_GET['id'];
 
-$sql = "SELECT * FROM tasks WHERE id = ?";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id);
+     $sql = "SELECT * FROM tasks WHERE id = ?";
+       $stmt = mysqli_prepare($conn, $sql);
+          mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+       $result = mysqli_stmt_get_result($stmt);
 
 if (!$result) {
     $_SESSION['error'] = "Query failed: " . mysqli_error($conn);
-    mysqli_stmt_close($stmt);
+              mysqli_stmt_close($stmt);
     mysqli_close($conn);
-    header("Location: index.php");
+                        header("Location: index.php");
     exit;
 }
 
-$task = mysqli_fetch_assoc($result);
+      $task = mysqli_fetch_assoc($result);
 
 if (!$task) {
     $_SESSION['error'] = "Data does not exist.";
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-    header("Location: index.php");
+            mysqli_stmt_close($stmt);
+    mysqli_c lose($conn);
+           header("Location: index.php");
     exit;
 }
 
